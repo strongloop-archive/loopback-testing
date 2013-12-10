@@ -32,8 +32,8 @@ var assert = require('assert');
 
 describe('/products', function() {
   lt.beforeEach.withApp(app);
-  lt.whenCalledRemotely('GET', '/products', function() {
-    lt.itShouldBeAllowed();
+  lt.describe.whenCalledRemotely('GET', '/products', function() {
+    lt.it.shouldBeAllowed();
     it('should have statusCode 200', function() {
       assert.equal(this.res.statusCode, 200);
     });

@@ -1,7 +1,7 @@
 var _describe = {};
 var _it = {};
 var _beforeEach = {};
-var helpers = module.exports = {
+var helpers = exports = module.exports = {
   describe: _describe,
   it: _it,
   beforeEach: _beforeEach
@@ -260,3 +260,5 @@ function(credentials, verb, url) {
     _it.shouldBeDenied();
   });
 }
+
+exports.TestDataBuilder = require('./lib/test-data-builder');

@@ -79,9 +79,15 @@ _beforeEach.withArgs = function() {
 }
 
 _beforeEach.givenModel = function(modelName, attrs, optionalHandler) {
+  var modelKey = modelName;
+
   if(typeof attrs === 'funciton') {
     optionalHandler = attrs;
     attrs = undefined;
+  }
+
+  if(typeof optionalHandler === 'string') {
+    modelKey = optionalHandler;
   }
 
   attrs = attrs || {};
@@ -103,9 +109,11 @@ _beforeEach.givenModel = function(modelName, attrs, optionalHandler) {
 
     model.create(attrs, function(err, result) {
       if(err) {
+        console.error(err.message);
+        if(err.details) console.error(err.details);
         done(err);
       } else {
-        test[modelName] = result;
+        test[modelKey] = result;
         done();
       }
     });
@@ -116,7 +124,7 @@ _beforeEach.givenModel = function(modelName, attrs, optionalHandler) {
   }
 
   afterEach(function(done) {
-    this[modelName].destroy(done);
+    this[modelKey].destroy(done);
   });
 }
 
@@ -137,6 +145,7 @@ _describe.whenCalledRemotely = function(verb, url, cb) {
   if(typeof url === 'function') {
     urlStr = '/<dynamic>';
   }
+
   describe(verb.toUpperCase() + ' ' + urlStr, function() {
     beforeEach(function(cb) {
       if(typeof url === 'function') {
@@ -144,16 +153,24 @@ _describe.whenCalledRemotely = function(verb, url, cb) {
       }
       this.remotely = true;
       this.verb = verb.toUpperCase();
-      this.url = url;
+      this.url = this.url || url;
       var methodForVerb = verb.toLowerCase();
       if(methodForVerb === 'delete') methodForVerb = 'del';
 
-      this.http = this.request[methodForVerb](url);
+      this.http = this.request[methodForVerb](this.url);
+
+      // request settings
       this.http.set('Accept', 'application/json');
-      this.req = this.http.req;
+      this.http.set('authorization', null);
+      if(this.accessToken) {
+        this.http.set('authorization', this.accessToken.id);
+      }
+
       var test = this;
       this.http.end(function(err) {
+        test.req = test.http.req;
         test.res = test.http.res;
+        test.url = undefined;
         cb();
       });
     });
@@ -186,13 +203,11 @@ _describe.whenLoggedInAsUser = function(credentials, cb) {
   describe('when logged in user', function() {
     _beforeEach.givenUser(credentials, function(done) {
       var test = this;
-      this.remotely = true;
       this.user.constructor.login(credentials, function(err, token) {
         if(err) {
           done(err);
         } else {
           test.accessToken = token;
-          test.req.set('authorization', token.id);
           done();
         }
       });
@@ -201,6 +216,12 @@ _describe.whenLoggedInAsUser = function(credentials, cb) {
     afterEach(function(done) {
       this.accessToken.destroy(done);
     });
+    
+    afterEach(function() {
+      this.accessToken = undefined;
+    });
+
+    cb();
   });
 }
 
@@ -215,7 +236,8 @@ _it.shouldBeAllowed = function() {
 _it.shouldBeDenied = function() {
   it('should not be allowed', function() {
     assert(this.res);
-    assert.equal(this.res.statusCode, 401);
+    var status = this.res.statusCode;
+    assert(status === 401 || status === 404);
   });
 }
 

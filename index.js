@@ -111,6 +111,8 @@ _beforeEach.givenModel = function(modelName, attrs, optionalHandler) {
 
     model.create(attrs, function(err, result) {
       if(err) {
+        console.error(err.message);
+        if(err.details) console.error(err.details);
         done(err);
       } else {
         test[modelKey] = result;
@@ -168,6 +170,7 @@ _describe.whenCalledRemotely = function(verb, url, cb) {
   if(typeof url === 'function') {
     urlStr = '/<dynamic>';
   }
+
   describe(verb.toUpperCase() + ' ' + urlStr, function() {
     beforeEach(function(cb) {
       if(typeof url === 'function') {
@@ -188,7 +191,9 @@ _describe.whenCalledRemotely = function(verb, url, cb) {
       this.req = this.http.req;
       var test = this;
       this.http.end(function(err) {
+        test.req = test.http.req;
         test.res = test.http.res;
+        test.url = undefined;
         cb();
       });
     });
@@ -236,7 +241,8 @@ _it.shouldBeAllowed = function() {
 _it.shouldBeDenied = function() {
   it('should not be allowed', function() {
     assert(this.res);
-    assert.equal(this.res.statusCode, 401);
+    var status = this.res.statusCode;
+    assert(status === 401 || status === 404);
   });
 }
 

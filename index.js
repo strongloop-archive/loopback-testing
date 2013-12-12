@@ -79,14 +79,22 @@ _beforeEach.withArgs = function() {
 }
 
 _beforeEach.givenModel = function(modelName, attrs, optionalHandler) {
+  var modelKey = modelName
+
   if(typeof attrs === 'funciton') {
     optionalHandler = attrs;
     attrs = undefined;
   }
 
+  if(typeof optionalHandler === 'string') {
+    modelKey = optionalHandler;
+  }
+
   attrs = attrs || {};
 
   var model = loopback.getModel(modelName);
+
+  assert(model, 'cannot get model of name ' + modelName);
 
   beforeEach(function(done) {
     var test = this;
@@ -105,7 +113,7 @@ _beforeEach.givenModel = function(modelName, attrs, optionalHandler) {
       if(err) {
         done(err);
       } else {
-        test[modelName] = result;
+        test[modelKey] = result;
         done();
       }
     });
@@ -116,12 +124,35 @@ _beforeEach.givenModel = function(modelName, attrs, optionalHandler) {
   }
 
   afterEach(function(done) {
-    this[modelName].destroy(done);
+    this[modelKey].destroy(done);
   });
 }
 
 _beforeEach.givenUser = function(attrs, optionalHandler) {
   _beforeEach.givenModel('user', attrs, optionalHandler);
+}
+
+_beforeEach.givenLoggedInUser = function(credentials, optionalHandler) {
+  _beforeEach.givenUser(credentials, function(done) {
+    var test = this;
+    this.user.constructor.login(credentials, function(err, token) {
+      if(err) {
+        done(err);
+      } else {
+        test.loggedInAccessToken = token;
+        done();
+      }
+    });
+  });
+
+  afterEach(function(done) {
+    var test = this;
+    this.loggedInAccessToken.destroy(function(err) {
+      if(err) return done(err);
+      test.loggedInAccessToken = undefined;
+      done();
+    });
+  });
 }
 
 _beforeEach.givenAnUnauthenticatedToken = function(attrs, optionalHandler) {
@@ -144,12 +175,16 @@ _describe.whenCalledRemotely = function(verb, url, cb) {
       }
       this.remotely = true;
       this.verb = verb.toUpperCase();
-      this.url = url;
+      this.url = this.url || url;
       var methodForVerb = verb.toLowerCase();
       if(methodForVerb === 'delete') methodForVerb = 'del';
 
-      this.http = this.request[methodForVerb](url);
+      this.http = this.request[methodForVerb](this.url);
+      this.url = undefined;
       this.http.set('Accept', 'application/json');
+      if(this.loggedInAccessToken) {
+        this.http.set('authorization', this.loggedInAccessToken.id);
+      }
       this.req = this.http.req;
       var test = this;
       this.http.end(function(err) {
@@ -162,45 +197,31 @@ _describe.whenCalledRemotely = function(verb, url, cb) {
   });
 }
 
+_describe.whenLoggedInAsUser = function(credentials, cb) {
+  describe('when logged in as user', function () {
+    _beforeEach.givenLoggedInUser(credentials);
+    cb();
+  });
+}
+
 _describe.whenCalledByUser = function(credentials, verb, url, cb) {
-  _describe.whenLoggedInAsUser(credentials, function() {
+  describe('when called by logged in user', function () {
+    _beforeEach.givenLoggedInUser(credentials);
     _describe.whenCalledRemotely(verb, url, cb);
   });
 }
 
 _describe.whenCalledAnonymously = function(verb, url, cb) {
-  _describe.whenCalledRemotely(verb, url, function() {
+  describe('when called anonymously', function () {
     _beforeEach.givenAnAnonymousToken();
-    cb();
+    _describe.whenCalledRemotely(verb, url, cb);
   });
 }
 
 _describe.whenCalledUnauthenticated = function(verb, url, cb) {
-  _describe.whenCalledRemotely(verb, url, function() {
-    _beforeEach.givenAnUnauthenticatedToken();
-    cb();
-  });
-}
-
-_describe.whenLoggedInAsUser = function(credentials, cb) {
-  describe('when logged in user', function() {
-    _beforeEach.givenUser(credentials, function(done) {
-      var test = this;
-      this.remotely = true;
-      this.user.constructor.login(credentials, function(err, token) {
-        if(err) {
-          done(err);
-        } else {
-          test.accessToken = token;
-          test.req.set('authorization', token.id);
-          done();
-        }
-      });
-    });
-
-    afterEach(function(done) {
-      this.accessToken.destroy(done);
-    });
+  describe('when called with unauthenticated token', function () {
+    _beforeEach.givenAnAnonymousToken();
+    _describe.whenCalledRemotely(verb, url, cb);
   });
 }
 
@@ -216,6 +237,13 @@ _it.shouldBeDenied = function() {
   it('should not be allowed', function() {
     assert(this.res);
     assert.equal(this.res.statusCode, 401);
+  });
+}
+
+_it.shouldNotBeFound = function() {
+  it('should not be found', function() {
+    assert(this.res);
+    assert.equal(this.res.statusCode, 404);
   });
 }
 

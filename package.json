@@ -13,10 +13,13 @@
     "supertest": "~0.8.2",
     "mocha": "~1.15.1",
     "loopback-datasource-juggler": "~1.2.7",
-    "loopback": "~1.3.3",
     "async": "~0.2.9"
   },
+  "peerDependencies": {
+    "loopback": "~1.3.3"
+  },
   "devDependencies": {
-    "chai": "~1.8.1"
+    "chai": "~1.8.1",
+    "loopback": "~1.3.3"
   }
 }

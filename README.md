@@ -45,3 +45,37 @@ describe('/products', function() {
   });
 });
 ```
+
+## building test data
+
+Use TestDataBuilder to build many Model instances in one async call. Specify
+only properties relevant to your test, the builder will pre-fill remaining
+required properties with sensible defaults.
+
+```js
+var TestDataBuilder = require('loopback-testing').TestDataBuilder;
+var ref = TestDataBuilder.ref;
+
+// The context object to hold the created models.
+// You can use `this` in mocha test instead.
+var context = {};
+
+var ref = TestDataBuilder.ref;
+new TestDataBuilder()
+  .define('application', Application, {
+    pushSettings: { stub: { } }
+  })
+  .define('device', Device, {
+     // use the value of application's id
+     // the value is resolved at build time
+     appId: ref('application.id'),
+     deviceType: 'android'
+  })
+  .define('notification', Notification)
+  .buildTo(context, function(err) {
+    // test models are available as
+    //   context.application
+    //   context.device
+    //   context.notification
+  });
+```

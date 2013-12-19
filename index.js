@@ -165,6 +165,33 @@ _beforeEach.givenAnAnonymousToken = function(attrs, optionalHandler) {
   _beforeEach.givenModel('accessToken', {id: '$anonymous'}, optionalHandler);
 }
 
+_beforeEach.givenResponseOf = function(verb, url, optionalHandler) {
+  beforeEach(function(cb) {
+    if(typeof url === 'function') {
+      url = url.call(this);
+    }
+    this.verb = verb.toUpperCase();
+    this.url = this.url || url;
+    var methodForVerb = verb.toLowerCase();
+    if(methodForVerb === 'delete') methodForVerb = 'del';
+
+    this.http = this.request[methodForVerb](this.url);
+    this.url = undefined;
+    this.http.set('Accept', 'application/json');
+    if(this.loggedInAccessToken) {
+      this.http.set('authorization', this.loggedInAccessToken.id);
+    }
+    this.req = this.http.req;
+    var test = this;
+    this.http.end(function(err) {
+      test.req = test.http.req;
+      test.res = test.http.res;
+      test.url = undefined;
+      cb();
+    });
+  });
+}
+
 _describe.whenCalledRemotely = function(verb, url, cb) {
   var urlStr = url;
   if(typeof url === 'function') {
@@ -172,32 +199,7 @@ _describe.whenCalledRemotely = function(verb, url, cb) {
   }
 
   describe(verb.toUpperCase() + ' ' + urlStr, function() {
-    beforeEach(function(cb) {
-      if(typeof url === 'function') {
-        url = url.call(this);
-      }
-      this.remotely = true;
-      this.verb = verb.toUpperCase();
-      this.url = this.url || url;
-      var methodForVerb = verb.toLowerCase();
-      if(methodForVerb === 'delete') methodForVerb = 'del';
-
-      this.http = this.request[methodForVerb](this.url);
-      this.url = undefined;
-      this.http.set('Accept', 'application/json');
-      if(this.loggedInAccessToken) {
-        this.http.set('authorization', this.loggedInAccessToken.id);
-      }
-      this.req = this.http.req;
-      var test = this;
-      this.http.end(function(err) {
-        test.req = test.http.req;
-        test.res = test.http.res;
-        test.url = undefined;
-        cb();
-      });
-    });
-
+    _beforeEach.givenResponseOf(verb, url, cb);
     cb();
   });
 }

@@ -9,7 +9,6 @@ describe('helpers', function () {
 
   testApp.use(loopback.rest());
   helpers.beforeEach.withApp(testApp);
-  helpers.beforeEach.withDefaultDataSource(loopback.memory());
 
   describe('helpers.it', function() {
     ['shouldBeAllowed',
@@ -24,8 +23,7 @@ describe('helpers', function () {
   describe('helpers.describe', function() {
     ['staticMethod',
      'whenLoggedInAsUser',
-     'whenCalledAnonymously',
-     'model']
+     'whenCalledAnonymously']
     .forEach(function(func) {
       it('should have a method named ' + func, function () {
         assert.equal(typeof helpers.describe[func], 'function');
@@ -45,10 +43,10 @@ describe('helpers', function () {
   });
 
   describe('helpers.beforeEach.givenModel', function() {
-    helpers.beforeEach.givenModel('AccessToken');
-    it('should have an AccessToken property', function () {
-      assert(this.AccessToken);
-      assert(this.AccessToken.id);
+    helpers.beforeEach.givenModel('xxx-test-model');
+    it('should have an xxx-test-model property', function () {
+      assert(this['xxx-test-model']);
+      assert(this['xxx-test-model'].id);
     });
   });
 

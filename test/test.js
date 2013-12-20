@@ -9,7 +9,6 @@ describe('helpers', function () {
 
   testApp.use(loopback.rest());
   helpers.beforeEach.withApp(testApp);
-  helpers.beforeEach.withDefaultDataSource(loopback.memory());
 
   describe('helpers.it', function() {
     ['shouldBeAllowed',

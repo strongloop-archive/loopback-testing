@@ -6,7 +6,7 @@ var helpers = exports = module.exports = {
   it: _it,
   beforeEach: _beforeEach
 };
-var loopback = require('loopback');
+var loopback = require(process.env.PATH_TO_LOOPACK || 'loopback');
 var assert = require('assert');
 var request = require('supertest');
 

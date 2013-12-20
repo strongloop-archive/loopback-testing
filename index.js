@@ -6,7 +6,7 @@ var helpers = exports = module.exports = {
   it: _it,
   beforeEach: _beforeEach
 };
-var loopback = require('loopback');
+var modelBuilder = require('loopback-datasource-juggler').ModelBuilder.defaultInstance;
 var assert = require('assert');
 var request = require('supertest');
 
@@ -26,7 +26,7 @@ _beforeEach.withDefaultDataSource = function(dataSource) {
     this.dataSource = dataSource;
 
     // TODO(ritch) this should not be required
-    loopback.AccessToken.attachTo(dataSource);
+    modelBuilder.getModel('AccessToken').attachTo(dataSource);
   });
 }
 
@@ -36,7 +36,7 @@ _describe.model = function describeModel(app, modelName, cb) {
   describe('Model: ' + modelName, function() {
     beforeEach(function() {
       this.app = app;
-      this.model = loopback.getModel(modelName);
+      this.model = modelBuilder.getModel(modelName);
       assert(this.model, 'you must define a model before testing it');
     });
     cb();
@@ -92,7 +92,7 @@ _beforeEach.givenModel = function(modelName, attrs, optionalHandler) {
 
   attrs = attrs || {};
 
-  var model = loopback.getModel(modelName);
+  var model = modelBuilder.getModel(modelName);
 
   assert(model, 'cannot get model of name ' + modelName);
 

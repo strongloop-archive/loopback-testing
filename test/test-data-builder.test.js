@@ -1,4 +1,5 @@
-var loopback = require('loopback');
+var juggler = require('loopback-datasource-juggler');
+var modelBuilder = juggler.ModelBuilder.defaultInstance;
 var TestDataBuilder = require('../lib/test-data-builder');
 var expect = require('chai').expect;
 
@@ -7,7 +8,7 @@ describe('TestDataBuilder', function() {
   var TestModel;
 
   beforeEach(function() {
-    db = loopback.createDataSource({ connector: loopback.Memory });
+    db = new juggler.DataSource({ connector: 'memory' });
   });
 
   it('builds a model', function(done) {
@@ -97,7 +98,7 @@ describe('TestDataBuilder', function() {
   }
 
   function givenModel(name, properties) {
-    var ModelCtor = loopback.createModel(name, properties);
+    var ModelCtor = modelBuilder.define(name, properties);
     ModelCtor.attachTo(db);
     return ModelCtor;
   }

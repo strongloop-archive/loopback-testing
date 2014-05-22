@@ -14,8 +14,7 @@
     "async": "~0.2.10"
   },
   "peerDependencies": {
-    "loopback": ">=1.6.1",
-    "loopback-datasource-juggler": "1.x"
+    "loopback": ">=1.6.1"
   },
   "devDependencies": {
     "chai": "~1.9.0",

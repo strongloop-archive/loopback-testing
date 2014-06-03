@@ -1,6 +1,6 @@
 {
   "name": "loopback-testing",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Utilities for testing LoopBack applications",
   "main": "index.js",
   "scripts": {
@@ -24,5 +24,4 @@
     "name": "Dual MIT/StrongLoop",
     "url": "https://github.com/strongloop/loopback-testing/blob/master/LICENSE"
   }
-
 }

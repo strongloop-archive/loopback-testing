@@ -14,11 +14,11 @@
     "async": "~0.2.10"
   },
   "peerDependencies": {
-    "loopback": ">=1.6.1"
+    "loopback": "^1.6.1"
   },
   "devDependencies": {
     "chai": "~1.9.0",
-    "loopback": ">=1.6.1"
+    "loopback": "^1.6.1"
   },
   "license": {
     "name": "Dual MIT/StrongLoop",

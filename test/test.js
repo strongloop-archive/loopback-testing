@@ -12,7 +12,14 @@ describe('helpers', function () {
 
   describe('helpers.it', function() {
     ['shouldBeAllowed',
-     'shouldBeDenied']
+     'shouldBeDenied',
+     'shouldNotBeFound',
+     'shouldBeAllowedWhenCalledAnonymously',
+     'shouldBeDeniedWhenCalledAnonymously',
+     'shouldBeAllowedWhenCalledUnauthenticated',
+     'shouldBeDeniedWhenCalledUnauthenticated',
+     'shouldBeAllowedWhenCalledByUser',
+     'shouldBeDeniedWhenCalledByUser']
     .forEach(function(func) {
       it('should have a method named ' + func, function () {
         assert.equal(typeof helpers.it[func], 'function');
@@ -22,8 +29,11 @@ describe('helpers', function () {
 
   describe('helpers.describe', function() {
     ['staticMethod',
+     'instanceMethod',
      'whenLoggedInAsUser',
-     'whenCalledAnonymously']
+     'whenCalledByUser',
+     'whenCalledAnonymously',
+     'whenCalledUnauthenticated']
     .forEach(function(func) {
       it('should have a method named ' + func, function () {
         assert.equal(typeof helpers.describe[func], 'function');
@@ -34,7 +44,10 @@ describe('helpers', function () {
   describe('helpers.beforeEach', function() {
     ['withArgs',
      'givenModel',
-     'givenUser']
+     'givenUser',
+     'givenLoggedInUser',
+     'givenAnUnauthenticatedToken',
+     'givenAnAnonymousToken']
     .forEach(function(func) {
       it('should have a helper method named ' + func, function () {
         assert.equal(typeof helpers.beforeEach[func], 'function');

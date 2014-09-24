@@ -59,5 +59,18 @@ describe('helpers', function () {
         });
       });
     });
+    helpers.describe.staticMethod('findById', function() {
+      helpers.beforeEach.givenModel('xxx-test-model', {foo: 'bar'});
+      helpers.describe.whenCalledRemotely('GET', function () {
+        return '/xxx-test-models/' + this['xxx-test-model'].id;
+      }, function() {
+        it('should retrieve the first model that this suite given', function () {
+          assert.equal(this.res.body.id, this['xxx-test-model'].id);
+        });
+        it('should retrieve the second model that this suite given', function () {
+          assert.equal(this.res.body.id, this['xxx-test-model'].id);
+        });
+      });
+    });
   });
 });

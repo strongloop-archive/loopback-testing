@@ -1,6 +1,6 @@
 {
   "name": "loopback-testing",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Utilities for testing LoopBack applications",
   "main": "index.js",
   "scripts": {
@@ -16,6 +16,10 @@
   "devDependencies": {
     "chai": "~1.9.0",
     "loopback": "^1.6.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/strongloop/loopback-testing"
   },
   "license": {
     "name": "Dual MIT/StrongLoop",

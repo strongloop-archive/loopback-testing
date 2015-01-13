@@ -1,11 +1,15 @@
+2015-01-13, Version 1.0.5
+=========================
+
+ * Throw err when beforeEach.withApp is not called (Farid Neshat)
+
+ * Fix bad CLA URL in CONTRIBUTING.md (Ryan Graham)
+
+
 2014-12-05, Version 1.0.4
 =========================
 
  * README: add basic mocha setup instructions (pulkitsinghal)
-
-
-2014-10-02, Version 1.0.3
-=========================
 
  * Update version to 1.0.3 (Simon Ho)
 
@@ -13,6 +17,12 @@
 2014-10-02, Version 1.0.2
 =========================
 
+
+
+2014-10-02, Version 1.0.3
+=========================
+
+ * Update version to 1.0.3 (Simon Ho)
 
 
 2014-10-02, Version 1.0.1

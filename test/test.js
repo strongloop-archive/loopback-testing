@@ -67,8 +67,16 @@ describe('helpers', function () {
     helpers.describe.staticMethod('create', function() {
       helpers.beforeEach.withArgs({foo: 'bar'});
       helpers.describe.whenCalledRemotely('POST', '/xxx-test-models', function() {
+
+        var model;
         it('should call the method over rest', function () {
+          model = this.res.body;
           assert.equal(this.res.statusCode, 200);
+        });
+
+        it('should only create one model', function () {
+          while(!model) {}
+          assert.equal(model, this.res.body);
         });
       });
     });
@@ -83,6 +91,16 @@ describe('helpers', function () {
         it('should retrieve the expected model in subsequent tests', function () {
           assert.equal(this.res.body.id, this['xxx-test-model'].id);
         });
+      });
+    });
+  });
+
+  describe('test', function() {
+    helpers.beforeEach.givenModel('xxx-test-model');
+
+    helpers.describe.whenCalledRemotely('GET', '/xxx-test-models', function() {
+      it('should retrieve the expected model in the first test', function () {
+        console.log(this.res.body)
       });
     });
   });

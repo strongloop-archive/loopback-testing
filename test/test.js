@@ -94,4 +94,14 @@ describe('helpers', function () {
       });
     });
   });
+
+  describe('test', function() {
+    helpers.beforeEach.givenModel('xxx-test-model');
+
+    helpers.describe.whenCalledRemotely('GET', '/xxx-test-models', function() {
+      it('should retrieve the expected model in the first test', function () {
+        console.log(this.res.body)
+      });
+    });
+  });
 });

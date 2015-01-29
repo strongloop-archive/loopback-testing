@@ -69,6 +69,36 @@ describe('/products', function() {
 });
 ```
 
+### call remote only once
+
+By default `whenCalledRemotely` will be run before each `it()`. This can be changed to run only once by adding a `$once` as a param to the callback function (i.e. `lt.describe.whenCalledRemotely('GET', '/', function($once) {..})`)
+
+
+```js
+var lt = require('loopback-testing');
+var assert = require('assert');
+var app = require('../server/server.js'); //path to app.js or server.js
+
+describe('/products', function() {
+  lt.beforeEach.withApp(app);
+  lt.describe.whenCalledRemotely('POST', '/products', {
+      name: 'product-1'
+    }, function($once) {
+      
+      var id;
+
+      it('should have statusCode 200', function() {
+        id = this.res.body.id;
+        assert.equal(this.res.statusCode, 200);
+      });
+
+      it('should have only been called once', function() {
+        assert.equal(this.res.body.id, id);
+      });
+    });
+});
+```
+
 ## building test data
 
 Use TestDataBuilder to build many Model instances in one async call. Specify

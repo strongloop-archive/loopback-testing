@@ -67,9 +67,18 @@ describe('helpers', function () {
     helpers.describe.staticMethod('create', function() {
       helpers.beforeEach.withArgs({foo: 'bar'});
       helpers.describe.whenCalledRemotely('POST', '/xxx-test-models', function() {
+
+        var id;
+
         it('should call the method over rest', function () {
+          id = this.res.body.id;
           assert.equal(this.res.statusCode, 200);
         });
+
+        it('should be called again have new id', function () {
+          assert.notEqual(this.res.body.id, id);
+        });
+
       });
     });
     helpers.describe.staticMethod('findById', function() {
@@ -109,4 +118,25 @@ describe('helpers', function () {
       });
     });
   });
+
+  describe('whenCalledRemotely once', function() {
+    helpers.describe.staticMethod('create', function() {
+      helpers.beforeEach.withArgs({foo: 'bar'});
+      helpers.describe.whenCalledRemotely('POST', '/xxx-test-models', function($once) {
+
+        var id;
+
+        it('should call the method over rest', function () {
+          id = this.res.body.id;
+          assert.equal(this.res.statusCode, 200);
+        });
+
+        it('should have only been called once', function () {
+          assert.equal(this.res.body.id, id);
+        });
+
+      });
+    });
+  });
+
 });

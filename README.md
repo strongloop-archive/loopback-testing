@@ -102,3 +102,87 @@ new TestDataBuilder()
     //   context.notification
   });
 ```
+
+## Function reference
+
+LoopBack Testing (lt):
+===
+
+  * describe,
+  * it,
+  * beforeEach,
+  * TestDataBuilder
+
+lt.describe:
+----
+
+  * staticMethod,
+  * instanceMethod,
+  * whenCalledRemotely,
+  * whenLoggedInAsUser,
+  * whenLoggedInAsUserWithRole,
+  * whenCalledByUser,
+  * whenCalledByUserWithRole,
+  * whenCalledAnonymously,
+  * whenCalledUnauthenticated
+
+lt.it:
+----
+
+  * shouldBeAllowed,
+  * shouldBeDenied,
+  * shouldNotBeFound,
+  * shouldBeAllowedWhenCalledAnonymously,
+  * shouldBeDeniedWhenCalledAnonymously,
+  * shouldBeAllowedWhenCalledUnauthenticated,
+  * shouldBeDeniedWhenCalledUnauthenticated,
+  * shouldBeAllowedWhenCalledByUser,
+  * shouldBeDeniedWhenCalledByUser,
+  * shouldBeAllowedWhenCalledByUserWithRole,
+  * shouldBeDeniedWhenCalledByUserWithRole
+
+lt.beforeEach:
+----
+
+  * withApp,
+  * withArgs,
+  * givenModel,
+  * givenUser,
+  * givenUserWithRole,
+  * givenLoggedInUser,
+  * givenLoggedInUserWithRole,
+  * givenAnUnauthenticatedToken,
+  * givenAnAnonymousToken,
+
+lt.TestDataBuilder:
+----
+Tagline: Build many Model instances in one async call.
+
+  * ref (static method)
+> Reference the value of a property from a model instance defined before.
+>
+> @param {string} path - Generally in the form '{name}.{property}', where {name}
+is the name passed to `define()` and {property} is the name of
+the property to use.
+
+  * define (dynamic method)
+> Define a new model instance.
+>
+> @param {string} name Name of the instance.
+> `buildTo()` will save the instance created as context[name].
+>
+> @param {constructor} Model Model class/constructor.
+>
+> @param {Object.<string, Object>=} properties - Properties to set in the object.
+> Intelligent default values are supplied by the builder for required properties not listed.
+>
+> @return TestDataBuilder (fluent interface)
+
+  * buildTo (dynamic method)
+> Asynchronously build all models defined via `define()` and save them in the supplied context object.
+>
+>  @param {Object.<string, Object>} context The context to object to populate.
+>
+>  @param {function(Error)} callback Callback.
+
+

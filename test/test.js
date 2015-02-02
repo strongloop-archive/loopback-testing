@@ -86,4 +86,27 @@ describe('helpers', function () {
       });
     });
   });
+
+  describe('cleanDatasource', function() {
+    helpers.describe.staticMethod('create', function() {
+      helpers.beforeEach.withArgs({foo: 'bar'});
+      helpers.describe.whenCalledRemotely('POST', '/xxx-test-models', function() {
+        it('should call the method over rest', function () {
+          assert.equal(this.res.statusCode, 200);
+        });
+      });
+    });
+
+    helpers.describe.staticMethod('findById', function() {
+      helpers.beforeEach.givenModel('xxx-test-model', {foo: 'bar'});
+      helpers.beforeEach.cleanDatasource();
+      helpers.describe.whenCalledRemotely('GET', function () {
+        return '/xxx-test-models/' + this['xxx-test-model'].id;
+      }, function() {
+        it('should not find the given model', function () {
+          assert.equal(this.res.statusCode, 404);
+        });
+      });
+    });
+  });
 });

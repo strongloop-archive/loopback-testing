@@ -1,3 +1,11 @@
+2015-02-23, Version 1.1.0
+=========================
+
+ * Add done callback (Ryan Schumacher)
+
+ * Add clean datasource feature (Ryan Schumacher)
+
+
 2015-01-13, Version 1.0.5
 =========================
 
@@ -11,18 +19,16 @@
 
  * README: add basic mocha setup instructions (pulkitsinghal)
 
+
+2014-10-02, Version 1.0.3
+=========================
+
  * Update version to 1.0.3 (Simon Ho)
 
 
 2014-10-02, Version 1.0.2
 =========================
 
-
-
-2014-10-02, Version 1.0.3
-=========================
-
- * Update version to 1.0.3 (Simon Ho)
 
 
 2014-10-02, Version 1.0.1

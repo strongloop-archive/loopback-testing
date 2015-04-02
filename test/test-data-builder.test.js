@@ -48,6 +48,23 @@ describe('TestDataBuilder', function() {
   itAutoFillsRequiredPropertiesWithUniqueValuesFor(Number);
   itAutoFillsRequiredPropertiesWithUniqueValuesFor(Date);
 
+  it('limits the length of the generated string value to the property length', function(done) {
+    var testMaxStringLength = 10;
+    givenTestModel({
+      required1: { type: String, required: true },
+      required2: { type: String, required: true, length: testMaxStringLength }
+    });
+
+    new TestDataBuilder()
+      .define('model', TestModel, {})
+      .buildTo(this, function(err) {
+        if (err) return done(err);
+        expect(this.model.required1).to.not.equal(this.model.required2);
+        expect(this.model.required2).to.have.length.of.at.most(testMaxStringLength);
+        done();
+      }.bind(this));
+  });
+
   it('auto-fills required Boolean properties with false', function(done) {
     givenTestModel({
       required: { type: Boolean, required: true }

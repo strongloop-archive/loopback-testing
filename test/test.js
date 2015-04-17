@@ -41,6 +41,20 @@ describe('helpers', function () {
     });
   });
 
+  describe('helpers.before', function() {
+    ['withArgs',
+     'givenModel',
+     'givenUser',
+     'givenLoggedInUser',
+     'givenAnUnauthenticatedToken',
+     'givenAnAnonymousToken']
+    .forEach(function(func) {
+      it('should have a helper method named ' + func, function () {
+        assert.equal(typeof helpers.before[func], 'function');
+      });
+    });
+  });
+
   describe('helpers.beforeEach', function() {
     ['withArgs',
      'givenModel',
@@ -66,9 +80,11 @@ describe('helpers', function () {
   describe('whenCalledRemotely', function() {
     helpers.describe.staticMethod('create', function() {
       helpers.beforeEach.withArgs({foo: 'bar'});
-      helpers.describe.whenCalledRemotely('POST', '/xxx-test-models', function() {
-        it('should call the method over rest', function () {
-          assert.equal(this.res.statusCode, 200);
+      helpers.call.before(function() {
+        helpers.describe.whenCalledRemotely('POST', '/xxx-test-models', function() {
+          it('should call the method over rest', function () {
+            assert.equal(this.res.statusCode, 200);
+          });
         });
       });
     });

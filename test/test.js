@@ -19,6 +19,11 @@ describe('helpers', function () {
      'shouldBeAllowedWhenCalledUnauthenticated',
      'shouldBeDeniedWhenCalledUnauthenticated',
      'shouldBeAllowedWhenCalledByUser',
+     'shouldBeValidCreateResponse',
+     'shouldBeValidGetAllResponse',
+     'shouldBeValidGetByIdResponse',
+     'shouldBeValidUpdateResponse',
+     'shouldBeValidDeleteResponse',
      'shouldBeDeniedWhenCalledByUser']
     .forEach(function(func) {
       it('should have a method named ' + func, function () {

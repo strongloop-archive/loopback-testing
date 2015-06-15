@@ -63,6 +63,26 @@ describe('helpers', function () {
     });
   });
 
+  describe('helpers.beforeEach.givenModel should accept an object to initialise the model', function() {
+    helpers.beforeEach.givenModel('xxx-test-model', {name: 'name'});
+    it('should have an xxx-test-model property', function () {
+      assert(this['xxx-test-model']);
+      assert(this['xxx-test-model'].id);
+      assert(this['xxx-test-model'].name === 'name');
+    });
+  });
+
+  describe('helpers.beforeEach.givenModel should accept an object array to initialise the model', function() {
+    helpers.beforeEach.givenModel('xxx-test-model', [{name: 'name0'}, {name: 'name1'}]);
+    it('should have an xxx-test-model property', function () {
+      assert(this['xxx-test-model']);
+      assert(this['xxx-test-model'][0].id);
+      assert(this['xxx-test-model'][0].name === 'name0');
+      assert(this['xxx-test-model'][1].id);
+      assert(this['xxx-test-model'][1].name === 'name1');
+    });
+  });
+
   describe('whenCalledRemotely', function() {
     helpers.describe.staticMethod('create', function() {
       helpers.beforeEach.withArgs({foo: 'bar'});

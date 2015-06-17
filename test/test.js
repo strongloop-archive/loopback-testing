@@ -19,7 +19,9 @@ describe('helpers', function () {
      'shouldBeAllowedWhenCalledUnauthenticated',
      'shouldBeDeniedWhenCalledUnauthenticated',
      'shouldBeAllowedWhenCalledByUser',
-     'shouldBeDeniedWhenCalledByUser']
+     'shouldBeDeniedWhenCalledByUser',
+     'shouldBeAllowedWhenCalledByUserWithRole',
+     'shouldBeDeniedWhenCalledByUserWithRole']
     .forEach(function(func) {
       it('should have a method named ' + func, function () {
         assert.equal(typeof helpers.it[func], 'function');
@@ -30,8 +32,11 @@ describe('helpers', function () {
   describe('helpers.describe', function() {
     ['staticMethod',
      'instanceMethod',
+     'whenCalledRemotely',
      'whenLoggedInAsUser',
+     'whenLoggedInAsUserWithRole',
      'whenCalledByUser',
+     'whenCalledByUserWithRole',
      'whenCalledAnonymously',
      'whenCalledUnauthenticated']
     .forEach(function(func) {
@@ -42,10 +47,18 @@ describe('helpers', function () {
   });
 
   describe('helpers.beforeEach', function() {
-    ['withArgs',
+    ['withApp',
+     'cleanDatasource',
+     'withArgs',
      'givenModel',
+     'withUserModel',
+     'withAccessTokenModel',
+     'withRoleModel',
+     'withRoleMappingModel',
      'givenUser',
+     'givenUserWithRole',
      'givenLoggedInUser',
+     'givenLoggedInUserWithRole',
      'givenAnUnauthenticatedToken',
      'givenAnAnonymousToken']
     .forEach(function(func) {

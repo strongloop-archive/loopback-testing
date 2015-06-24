@@ -1,3 +1,17 @@
+2015-06-24, Version 1.2.0
+=========================
+
+ * Respect model property length for TDB strings (zero5100)
+
+ * use object to support placeholder pattern for when called remotely (ningsuhen)
+
+ * use findorCreate to create roles (ningsuhen)
+
+ * Initial withUserModel feature (Ryan Schumacher)
+
+ * Update helpers.js (Vladyslav Millier)
+
+
 2015-02-23, Version 1.1.0
 =========================
 

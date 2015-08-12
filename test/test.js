@@ -18,6 +18,7 @@ describe('helpers', function () {
      'shouldBeDeniedWhenCalledAnonymously',
      'shouldBeAllowedWhenCalledUnauthenticated',
      'shouldBeDeniedWhenCalledUnauthenticated',
+     'shouldBeNotFoundWhenCalledUnauthenticated',
      'shouldBeAllowedWhenCalledByUser',
      'shouldBeValidCreateResponse',
      'shouldBeValidGetAllResponse',

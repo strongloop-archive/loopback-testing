@@ -20,8 +20,5 @@
     "loopback": "^2.2.0",
     "mocha": "~1.21.4"
   },
-  "license": {
-    "name": "Dual MIT/StrongLoop",
-    "url": "https://github.com/strongloop/loopback-testing/blob/master/LICENSE"
-  }
+  "license": "MIT"
 }

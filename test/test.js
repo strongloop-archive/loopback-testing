@@ -13,6 +13,7 @@ describe('helpers', function () {
   describe('helpers.it', function() {
     ['shouldBeAllowed',
      'shouldBeDenied',
+     'shouldBeRejected',
      'shouldNotBeFound',
      'shouldBeAllowedWhenCalledAnonymously',
      'shouldBeDeniedWhenCalledAnonymously',

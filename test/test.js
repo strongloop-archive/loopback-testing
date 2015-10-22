@@ -6,6 +6,7 @@ describe('helpers', function () {
   var testApp = loopback();
   var db = testApp.dataSource('db', {connector: loopback.Memory});
   var testModel = testApp.model('xxx-test-model', {dataSource: 'db'});
+  testApp.model(loopback.User, { dataSource: 'db'});
   testApp.model(loopback.Role, { dataSource: 'db'});
   testApp.model(loopback.RoleMapping, { dataSource: 'db'});
 
@@ -109,6 +110,18 @@ describe('helpers', function () {
           assert.equal(this.res.statusCode, 404);
         });
       });
+    });
+  });
+
+  describe('givenUserWithRole', function() {
+    helpers.beforeEach.givenUserWithRole(
+      {id: 1, email: "abc@abc.com", password: "abc"}, 
+      {id: 2, name: "testRole"});
+    it("should create a user instance with default userModel with the given role", function() {
+      assert.equal(this['User'].id, 1);
+      assert.equal(this.userRole.id, 2);
+      assert.equal(this.userRole.name, "testRole");
+      assert(this.userRoleMapping);
     });
   });
 

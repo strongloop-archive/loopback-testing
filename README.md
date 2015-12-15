@@ -1,3 +1,7 @@
+# DEPRECATED - This repo will be removed and archived soon
+
+---
+
 #loopback-testing
 
 **Utilities for testing LoopBack apps**

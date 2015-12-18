@@ -1,4 +1,4 @@
-# DEPRECATED - This repo will be removed and archived soon
+# DEPRECATED - This repo will be removed and archived soon, see https://groups.google.com/forum/#!topic/loopbackjs/w038RvqHeYI
 
 ---
 

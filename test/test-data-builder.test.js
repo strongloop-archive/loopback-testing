@@ -1,3 +1,8 @@
+// Copyright IBM Corp. 2013,2015. All Rights Reserved.
+// Node module: loopback-testing
+// This file is licensed under the MIT License.
+// License text available at https://opensource.org/licenses/MIT
+
 var loopback = require('loopback');
 var TestDataBuilder = require('../lib/test-data-builder');
 var expect = require('chai').expect;

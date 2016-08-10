@@ -1,4 +1,12 @@
-# DEPRECATED - This repo will be removed and archived soon, see https://groups.google.com/forum/#!topic/loopbackjs/w038RvqHeYI
+# DEPRECATED
+
+This module is no longer maintained by StrongLoop/IBM.
+
+We are encouraging the community to take the ownership of this module.
+Please open an issue in https://github.com/strongloop/loopback if you
+are willing to become the new maintainer.
+
+See also https://groups.google.com/forum/#!topic/loopbackjs/w038RvqHeYI
 
 ---
 

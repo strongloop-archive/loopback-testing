@@ -1,3 +1,27 @@
+2016-08-10, Version 1.3.0
+=========================
+
+ * Update deprecation notice (Miroslav Bajtoš)
+
+ * Update URLs in CONTRIBUTING.md (#73) (Ryan Graham)
+
+ * update copyright notices and license (Ryan Graham)
+
+ * Updates (Simon Ho)
+
+ * Update README.md (Simon Ho)
+
+ * Refer to licenses with a link (Sam Roberts)
+
+ * Use strongloop conventions for licensing (Sam Roberts)
+
+ * Move mocha to dev deps (Ritchie Martori)
+
+ * Wait for automigrate to finish (Vlad Miller)
+
+ * Replace call of login method on constructor (Aris Kemper)
+
+
 2015-06-24, Version 1.2.0
 =========================
 

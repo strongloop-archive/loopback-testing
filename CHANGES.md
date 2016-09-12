@@ -1,3 +1,9 @@
+2016-09-12, Version 1.4.0
+=========================
+
+ * Update dependencies to the latest version (Miroslav Bajtoš)
+
+
 2016-08-10, Version 1.3.0
 =========================
 

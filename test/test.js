@@ -18,12 +18,19 @@ describe('helpers', function () {
   describe('helpers.it', function() {
     ['shouldBeAllowed',
      'shouldBeDenied',
+     'shouldBeRejected',
      'shouldNotBeFound',
      'shouldBeAllowedWhenCalledAnonymously',
      'shouldBeDeniedWhenCalledAnonymously',
      'shouldBeAllowedWhenCalledUnauthenticated',
      'shouldBeDeniedWhenCalledUnauthenticated',
+     'shouldBeNotFoundWhenCalledUnauthenticated',
      'shouldBeAllowedWhenCalledByUser',
+     'shouldBeValidCreateResponse',
+     'shouldBeValidGetAllResponse',
+     'shouldBeValidGetByIdResponse',
+     'shouldBeValidUpdateResponse',
+     'shouldBeValidDeleteResponse',
      'shouldBeDeniedWhenCalledByUser']
     .forEach(function(func) {
       it('should have a method named ' + func, function () {
